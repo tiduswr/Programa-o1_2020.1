@@ -17,19 +17,19 @@ bool isPrime(int N){
 }
 
 int main(){
-	//A quest√£o n√£o solicitou tratamento de erros por parte do Usuario
+	//A quest„o n„o solicitou tratamento de erros por parte do Usuario
 	int		n;
 	setlocale(LC_ALL,"Portuguese_Brazil");
 	
-	printf("VERIFIQUE SE UM NUMERO √© PRIMO!!\n\n\n");
+	printf("VERIFIQUE SE UM NUMERO … PRIMO!!\n\n\n");
 	printf("Digite o numero inteiro a ser verificado!");
 	scanf("%d", &n);
 	
 	if(isPrime(n)){
-		printf("\nSeu n√∫mero √© Primo!");
+		printf("\nSeu numero È Primo!");
 	}
 	else{
-		printf("\nSeu n√∫mero n√£o √© primo");
+		printf("\nSeu numero n„o È primo");
 	}
 	return 0;
 }

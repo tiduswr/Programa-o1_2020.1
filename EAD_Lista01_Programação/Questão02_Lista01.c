@@ -7,9 +7,9 @@
 
 //Functions
 int FibonacciFind(int term){
-	//O numero de ouro, quando aplicado na formula de binet tende a zero, por isso o resultado nï¿½o ï¿½ exato nesta funï¿½ï¿½o
-	//A razÃ£o de n+1 por n nï¿½o ï¿½ exata, e o valor considerado atualmente ï¿½ chamado de PHI que armazenei na variavel
-	//AUREA, esta funï¿½ï¿½o foi sï¿½ para testar uma forma nova de calculo por meio de uma funï¿½ï¿½o fechada
+	//O numero de ouro, quando aplicado na formula de binet tende a zero, por isso o resultado n?o ? exato nesta fun??o
+	//A razão de n+1 por n n?o ? exata, e o valor considerado atualmente ? chamado de PHI que armazenei na variavel
+	//AUREA, esta fun??o foi s? para testar uma forma nova de calculo por meio de uma fun??o fechada
 	//Obs: Conforme o termo aumenta, o valor retornado pode ficar negativo!
 	
 	const float 	AUREA = 1.618034;
@@ -30,32 +30,33 @@ int main(void){
 	int		lenght;
 	int		option;
 	
+	system("cls");
 	setlocale(LC_ALL, "Portuguese_Brazil");
 	printf("VERIFIQUE UMA SEQUENCIA FIBONACCI:\n\n");
 	printf("1. Verificar um termo 'n' na sequencia Fibonacci\n");
 	printf("2. Verficiar a sequencia de termos completa\n\n");
-	printf("Digite a Opï¿½ï¿½o: ");
+	printf("Digite a Opção: ");
 	scanf("%d", &option);
 	system("cls");
 	if(option != 1 && option != 2){
-		printf("\nOpï¿½ï¿½o incorreta, encerrando..\n");
+		printf("\nOpção incorreta, encerrando..\n");
 		exit(0);
 	}
 	
 	if(option == 2){
-		//Nï¿½o consegui criar uma fun~ï¿½ï¿½o que retornasse um array, li em foruns e disseram que nï¿½o ï¿½ possivel
+		//Não consegui criar uma função que retornasse um array, li em foruns e disseram que não é possivel
 		printf("VERIFIQUE UMA SEQUENCIA FIBONACCI:\n\n");
 		printf("\nDigite a Quantidade de termos desejados: ");
 		scanf("%d", &lenght);
 		system("cls");
 		if(lenght > 46){
-			printf("\nOpï¿½ï¿½o incorreta, encerrando..\n");
+			printf("\nOpção incorreta, encerrando..\n");
 			exit(0);
 		}
 		//Define variaveis para loop
 		int		array[lenght];
 		int		i;
-		//Define valore padrï¿½es		
+		//Define valore padrões		
 		if(lenght >= 1){
 			array[0] = 0;
 		}
@@ -78,7 +79,7 @@ int main(void){
 		scanf("%d", &lenght);
 		system("cls");
 		if(lenght > 46){
-			printf("\nOpï¿½ï¿½o incorreta, encerrando..\n");
+			printf("\nOpção incorreta, encerrando..\n");
 			exit(0);
 		}
 		
@@ -86,7 +87,7 @@ int main(void){
 		int 	fibTermo;
 		fibTermo = FibonacciFind(lenght);
 		printf("VERIFIQUE UMA SEQUENCIA FIBONACCI:\n\n");
-		printf("O valor correspondente ao termo nÂº %d Ã© aproximadamente %d\n", lenght, fibTermo);
+		printf("O valor correspondente ao termo nº %d é aproximadamente %d\n\n", lenght, fibTermo);
 	}
 	return 0;
 }

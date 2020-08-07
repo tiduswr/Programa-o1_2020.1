@@ -22,6 +22,7 @@ int main(void){
 	//Não foi solicitado tratamento de erros para o Usuario!
 	int		n;
 	int		i;
+	system("cls");
 	setlocale(LC_ALL, "Portuguese");
 	
 	printf("VERIFICADOR DE NUMEROS PRIMOS MENORES QUE ""N""");
@@ -30,7 +31,8 @@ int main(void){
 	
 	for(i=1; i<=n; i++){
 		if(isPrime(i)){
-			printf("\n%d é Primo!",i);
+			printf("\n%d É Primo!",i);
 		}
 	}
+	printf("\n\n");
 }
