@@ -17,7 +17,7 @@ bool isPrime(int N){
 }
 
 int main(){
-	//A questão não solicitou tratamento de erros por parte do Usuario
+	//A questão não solicitou tratamento de erros por parte do Usuário
 	int		n;
 	system("cls");
 	setlocale(LC_ALL,"Portuguese_Brazil");
