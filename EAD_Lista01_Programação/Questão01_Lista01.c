@@ -16,10 +16,10 @@ bool isPrime(int N){
 	return 1;
 }
 
-int main(void){
+int main(){
 	//A questão não solicitou tratamento de erros por parte do Usuario
 	int		n;
-	setlocale(LC_ALL,"Portuguese");
+	setlocale(LC_ALL,"Portuguese_Brazil");
 	
 	printf("VERIFIQUE SE UM NUMERO é PRIMO!!\n\n\n");
 	printf("Digite o numero inteiro a ser verificado!");
