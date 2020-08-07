@@ -87,7 +87,8 @@ int main(void){
 		int 	fibTermo;
 		fibTermo = FibonacciFind(lenght);
 		printf("VERIFIQUE UMA SEQUENCIA FIBONACCI:\n\n");
-		printf("O valor correspondente ao termo nº %d é aproximadamente %d\n\n", lenght, fibTermo);
+		printf("O valor correspondente ao termo nº %d é aproximadamente %d", lenght, fibTermo);
 	}
+	printf("\n\n");
 	return 0;
 }

@@ -19,6 +19,7 @@ bool isPrime(int N){
 int main(){
 	//A questão não solicitou tratamento de erros por parte do Usuario
 	int		n;
+	system("cls");
 	setlocale(LC_ALL,"Portuguese_Brazil");
 	
 	printf("VERIFIQUE SE UM NUMERO É PRIMO!!\n\n\n");
@@ -31,5 +32,6 @@ int main(){
 	else{
 		printf("\nSeu numero não é primo");
 	}
+	printf("\n\n");
 	return 0;
 }
