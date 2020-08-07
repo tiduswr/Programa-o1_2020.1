@@ -30,7 +30,7 @@ int main(void){
 	int		lenght;
 	int		option;
 	
-	setlocale(LC_ALL, "Portuguese");
+	setlocale(LC_ALL, "Portuguese_Brazil");
 	printf("VERIFIQUE UMA SEQUENCIA FIBONACCI:\n\n");
 	printf("1. Verificar um termo 'n' na sequencia Fibonacci\n");
 	printf("2. Verficiar a sequencia de termos completa\n\n");
