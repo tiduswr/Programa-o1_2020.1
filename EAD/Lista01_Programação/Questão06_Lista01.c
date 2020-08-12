@@ -67,7 +67,6 @@ int main(void){
     }
 
     max = lenInt(MaxValue(values));
-    printf("%d", max);
     //Imprime Matriz
     printf("=-=-=-=-=-=-=-IMPRIME MATRIZ FORMATADA=-=-=-=-=-=-=-\n");
     printf("\n**Resultado abaixo: \n\n");

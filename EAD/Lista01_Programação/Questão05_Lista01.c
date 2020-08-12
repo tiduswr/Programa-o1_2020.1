@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <locale.h>
-#define lenVetor 10
+#define lenVetor 100
 
 int BubbleSort(int arr[]){
     int temp;
