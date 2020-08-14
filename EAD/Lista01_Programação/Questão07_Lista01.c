@@ -115,9 +115,8 @@ int main(void){
     
     //Inicia variaveis
     int values[eixoX][eixoY], aux;
-    int col, LenCelulas;
-    int *ptrmax;
-    int maxCols[3] = {0,0,0}, numDigi = 0;
+    int LenCelulas;
+    int numDigi = 0;
     for(int i = 0; i < eixoX; i++){
         for(int j = 0; j < eixoY; j++){
             values[i][j] = 0;
