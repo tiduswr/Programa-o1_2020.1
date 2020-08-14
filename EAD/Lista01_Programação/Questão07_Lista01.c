@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <locale.h>
+#include <stdbool.h>
 #define eixoX 10
 #define eixoY 3
 
@@ -24,32 +25,35 @@ int MaxValue(int arr[eixoX][eixoY]){
 }
 
 int lenInt(int value){
+    int returnValue;
+
     if(value < 10){
-        return 1;
+        returnValue = 1;
     }
     else if(value < 100){
-        return 2;
+        returnValue = 2;
     }
     else if(value < 1000){
-        return 3;
+        returnValue = 3;
     }
     else if(value < 10000){
-        return 4;
+        returnValue = 4;
     }
     else if(value < 100000){
-        return 5;
+        returnValue = 5;
     }
     else if(value < 1000000){
-        return 6;
+        returnValue = 6;
     }
+    return returnValue;
 }
 
-int isEven(int n){
+bool isEven(int n){
     if(n % 2 == 0){
-        return 1;
+        return true;
     }
     else{
-        return 0;
+        return false;
     }
 }
 
@@ -64,14 +68,14 @@ int lenUsed(int values[eixoX][eixoY], int col){
     return cont;
 }
 
-int orgNumber(int saveValue, int values[eixoX][eixoY], int midCol, int col){
+void orgNumber(int saveValue, int values[eixoX][eixoY], int midCol, int col){
         int colmax = lenUsed(values, col);
         int midmax = lenUsed(values, midCol);
+        int aux;
         
         if(saveValue >= 0){
             if(colmax <= eixoX - 1){
                 values[colmax][col] = saveValue;
-                colmax++;
             }
             else{
                 if(midmax <= eixoX - 1){
@@ -85,22 +89,24 @@ int orgNumber(int saveValue, int values[eixoX][eixoY], int midCol, int col){
                         }
                     }
                     values[colmax-1][col] = saveValue;
-                    midmax++;
                 }
                 else{
+                    aux = values[0][col];
                     for(int i = 0; i < eixoX; i++){
                         if(i < eixoX - 1){
                             values[i][col] = values[i+1][col];
+                            values[i][midCol] = values[i+1][midCol];
                         }
                         else{
                             values[i][col] = 0;
+                            values[i][midCol] = 0;
                         }
                     }
                     values[colmax-1][col] = saveValue;
-                }      
+                    values[midmax-1][midCol] = aux;
+                }    
             } 
         }
-    return colmax;
 }
 
 int main(void){
@@ -126,11 +132,11 @@ int main(void){
         scanf("%d", &aux);  
         numDigi++;
         //Verifica se o numero é par ou impar
-        if(isEven(aux) == 1){
-            maxCols[2] = orgNumber(aux, values, 1, 2);
+        if(isEven(aux)){
+            orgNumber(aux, values, 1, 2);
         }   
         else{
-            maxCols[0] = orgNumber(aux, values, 1, 0);
+            orgNumber(aux, values, 1, 0);
         }
     }
     //Imprime
