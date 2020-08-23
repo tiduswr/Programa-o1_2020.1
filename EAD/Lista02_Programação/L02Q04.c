@@ -9,12 +9,12 @@ int buscaBinaria (int key, int lenVet, int v[]) {
    while (left < right-1) {  
        //Calcula o valor do meio do vetor
         int mid = (left + right)/2;
-        //Verifica se o valor do meio é menor que a chave
-        if (v[mid] < key){
-            //Se for menor, então a primeira posição se torna a do meio
+        //Verifica se o valor do meio é maior que a chave
+        if (v[mid] > key){
+            //Se for maior, então a primeira posição se torna a do meio
             left = mid;
         }
-        //Se não for menor, então a posição do meio se torna a ultima
+        //Se não for maior, então a posição do meio se torna a ultima
         else{
             right = mid;
         }  
@@ -35,7 +35,7 @@ int main(void){
 
     int pos;
     int verify[] = {33, 50, 77, 90, 99};
-    int DefaultValues[] = {10, 16, 27, 31, 33, 37, 41, 49, 53, 57, 68, 69, 72, 77, 84, 89, 95, 99};
+    int DefaultValues[] = {99, 95, 89, 84, 77, 72, 69, 68, 57, 53, 49, 41, 37, 33, 31, 27, 16, 10};
     
     //Imprime vetores
     printf("Valores para Verificar:\n\n");
