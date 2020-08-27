@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <locale.h>
-#define LENTURMA 2
+#define LENTURMA 5
 
 typedef struct{
     char Nome[50];
