@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <locale.h>
-#define LEN 2
+#define LEN 10
 
 typedef struct{
     int value;
