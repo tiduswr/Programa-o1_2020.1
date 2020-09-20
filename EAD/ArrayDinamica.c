@@ -1,27 +1,46 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int makearray(int xarr[], int len){
-    // exemplo para criar uma matriz em funções
-    for(int i = 0; i < len; i++){
-        xarr[i] = i;
-    }
-    return 0;
-}
+struct posicao
+{
+    int linha;
+    int coluna;
+};
 
-int main(void){
-    system("cls");
+typedef struct posicao POSICAO;
 
-    int *arr;
-    int arrLen;
+int main()
+{
+    POSICAO **ponteiroPosicao;
 
-    arrLen = 3; // crie um controle para dinamizar as matrizes
-    arr = malloc(arrLen * sizeof(int)); //Aloque memoria com malloc
+    ponteiroPosicao = malloc(5 * sizeof(POSICAO*));
+    ponteiroPosicao[0] = malloc(sizeof(POSICAO));
+    ponteiroPosicao[1] = malloc(sizeof(POSICAO));
+    ponteiroPosicao[2] = malloc(sizeof(POSICAO));
+    ponteiroPosicao[3] = malloc(sizeof(POSICAO));
+    ponteiroPosicao[4] = malloc(sizeof(POSICAO));
 
-    makearray(arr, arrLen);
+    ponteiroPosicao[0]->linha = 1;
+    ponteiroPosicao[0]->coluna = 1;
 
-    for(int i = 0; i < arrLen; i++){
-        printf("%d ", arr[i]);
-    }   
-    free(arr);
+    ponteiroPosicao[1]->linha = 2;
+    ponteiroPosicao[1]->coluna = 2;
+
+    ponteiroPosicao[2]->linha = 3;
+    ponteiroPosicao[2]->coluna = 3;
+    ponteiroPosicao[3]->linha = 4;
+    ponteiroPosicao[3]->coluna = 4;
+    ponteiroPosicao[4]->linha = 5;
+    ponteiroPosicao[4]->coluna = 5;
+
+    printf("Primeira posicao: %d %d\n", ponteiroPosicao[0]->linha, ponteiroPosicao[0]->coluna);
+    printf("Segunda posicao: %d %d\n", ponteiroPosicao[1]->linha, ponteiroPosicao[1]->coluna);
+    printf("Segunda posicao: %d %d\n", ponteiroPosicao[2]->linha, ponteiroPosicao[2]->coluna);
+    printf("Segunda posicao: %d %d\n", ponteiroPosicao[3]->linha, ponteiroPosicao[3]->coluna);
+    printf("Segunda posicao: %d %d\n", ponteiroPosicao[4]->linha, ponteiroPosicao[4]->coluna);
+    free(ponteiroPosicao[0]);
+    free(ponteiroPosicao[1]);
+    free(ponteiroPosicao);    
+
+    system("pause");
 }
