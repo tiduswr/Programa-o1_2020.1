@@ -4,6 +4,7 @@
 #include <string.h>
 #include <ctype.h>
 
+/* ******************** CRIAÇÃO E STRUCTS ************************* */
 typedef struct Agenda{
     char nome[40];
     char telefone[15];
@@ -14,6 +15,8 @@ typedef struct Agenda{
 Agenda * criaAgenda(){
     return NULL;
 }
+
+/* ******************** UTILITARIOS ************************* */
 
 char * maiuscula(char str[], int tamStr){
         int i = 0;
@@ -32,30 +35,46 @@ char * maiuscula(char str[], int tamStr){
 Agenda * Pos_Node(Agenda *ref, int pos){
     Agenda *aux = ref;
     int i = 0;
-
-    while(aux != NULL){
-        if(i == pos){
-            return aux;
+    if(pos >= 0 && ref != (Agenda *) NULL){
+        while(aux != NULL){
+            if(i == pos){
+                return aux;
+            }
+            i++;
+            aux = aux->prox;
         }
-        i++;
-        aux = aux->prox;
     }
-
     return (Agenda *) NULL;
 }
 
 int tamLista(Agenda *ref){
-    Agenda *aux = ref;
-    int i = 0;
-    while(aux != NULL){
-        aux = aux->prox;
-        i++;
+    if(ref != (Agenda *) NULL){
+        Agenda *aux = ref;
+        int i = 0;
+        while(aux != NULL){
+            aux = aux->prox;
+            i++;
+        }
+        return i;
     }
-    return i;
+    else{
+        return 0;
+    }
+    
 }
+
+int positivo(int valor){
+    if(valor < 0){
+        return valor * (-1);
+    }
+    return valor;
+}
+
+/* ******************** FUNÇÕES PRINCIPAIS ************************* */
 
 Agenda * inserirContato(Agenda *ref, char nome[40], char telefone[15], char email[40]){
     Agenda *nova;
+
     nova = (Agenda *) malloc(sizeof(Agenda));
     strcpy(nova->nome, nome);
     strcpy(nova->telefone, telefone);
@@ -66,34 +85,93 @@ Agenda * inserirContato(Agenda *ref, char nome[40], char telefone[15], char emai
         return nova;
     }
     else{
-
         Agenda *aux = ref;
+
         int tamanho = tamLista(aux);
         int i = 0;
-
-        while(strcmp(nome,aux->nome) > 0 && i <= tamanho){
+        //Procura em que posição o nome fica menor 
+        while(aux != (Agenda *) NULL){
+            if(strcmp(maiuscula(nome,40), maiuscula(aux->nome,40)) < 0){
+                break;
+            }
+            i++;
             aux = aux->prox;
-            i++;    
         }
-        printf("%d",i);
+        //Verifica se vai ser inserido no final inicio ou meio
         if(i == tamanho){
+            //Final
             aux = Pos_Node(ref, i-1);
             nova->prox = criaAgenda();
             aux->prox = nova;
             return ref;
         }
-        if(i == 0){
+        else if(i == 0){
+            //Inicio
             nova->prox = ref;
             return nova;
         }
-        if(i < tamanho && i > 0){
-            aux = Pos_Node(ref, i-2);
+        else if(i < tamanho && i > 0){
+            //Meio
+            aux = Pos_Node(ref, i-1);
             nova->prox = Pos_Node(ref, i);
             aux->prox = nova;
             return ref;
         }
     }
+    return (Agenda *) NULL;
 }
+
+void listarAgenda(Agenda *ref, char title[]){
+    Agenda *aux = ref;
+    int qtdcont = 0;
+    if(ref != (Agenda *) NULL){
+        printf("- %s:\n\n",title);
+        printf("----------------------------------------+---------------+----------------------------------------+\n");
+        printf("                  NOME                  |    TELEFONE   |                 EMAIL                  |\n");
+        printf("----------------------------------------+---------------+----------------------------------------+\n");
+        while(aux != NULL){
+            printf("%s", aux->nome);
+            for(int i = 0; i < positivo(strlen(aux->nome)-40);i++){
+                printf(" ");
+            }
+            printf("|");
+            printf("%s", aux->telefone);
+            for(int i = 0; i < positivo(strlen(aux->telefone)-15);i++){
+                printf(" ");
+            }
+            printf("|");
+            printf("%s", aux->email);
+            for(int i = 0; i < positivo(strlen(aux->email)-40);i++){
+                printf(" ");
+            }
+            printf("|");
+            printf("\n");
+            qtdcont++;
+            aux = aux->prox;
+        }
+        printf("----------------------------------------+---------------+----------------------------------------+\n");
+        printf("Total de Contatos cadastrados: %d", qtdcont);
+    }
+    else{
+        printf("\n- Nenhum Contato cadastrado!");
+    }
+    
+}
+
+Agenda * BuscarContato(Agenda *ref, char nome[]){
+    if(ref != (Agenda *) NULL){
+        Agenda *aux = ref;
+        while(aux != NULL){
+            if(strcmp(maiuscula(nome,40), maiuscula(aux->nome,40)) == 0){
+                return aux;
+            }
+            aux = aux->prox;
+        }
+    }
+    return (Agenda *) NULL;
+}
+
+/* ******************** MAIN ************************* */
 
 int main(void){
     setlocale(LC_ALL, "Portuguese");
@@ -101,22 +179,24 @@ int main(void){
     Agenda *minhaAgenda = criaAgenda();
     //char loop = 'S';
 
-    minhaAgenda = inserirContato(minhaAgenda, "abelha", "81762006", "harllem@gmail.com");
-    minhaAgenda = inserirContato(minhaAgenda, "zz", "34213350", "neto@gmail.com");
+    minhaAgenda = inserirContato(minhaAgenda, "willian", "81762006", "harllem@gmail.com");
+    minhaAgenda = inserirContato(minhaAgenda, "bastiao", "34213350", "neto@gmail.com");
     minhaAgenda = inserirContato(minhaAgenda, "ezequiel", "81437783", "ezequiel@gmail.com");
-    
-    Agenda *aux = minhaAgenda;
-    while(aux != NULL){
-        printf("Nome: %s\n", aux->nome);
-        printf("Email: %s\n", aux->email);
-        printf("Telefone: %s\n", aux->telefone);
-        printf("\n");
-        aux = aux->prox;
-    }
+    minhaAgenda = inserirContato(minhaAgenda, "ulisses", "81437783", "ezequiel@gmail.com");
+    minhaAgenda = inserirContato(minhaAgenda, "jonas", "81437783", "ezequiel@gmail.com");
+    minhaAgenda = inserirContato(minhaAgenda, "zeh", "81437783", "ezequiel@gmail.com");
+    minhaAgenda = inserirContato(minhaAgenda, "jose", "81437783", "ezequiel@gmail.com");
+    minhaAgenda = inserirContato(minhaAgenda, "manoel", "81437783", "ezequiel@gmail.com");
+    minhaAgenda = inserirContato(minhaAgenda, "1", "81437783", "ezequiel@gmail.com");
+    minhaAgenda = inserirContato(minhaAgenda, "ilmar", "81437783", "ezequiel@gmail.com");
+    minhaAgenda = inserirContato(minhaAgenda, "abelha", "81762006", "harllem@gmail.com");
 
-    printf("%d", tamLista(minhaAgenda));
+    Agenda *aux = BuscarContato(minhaAgenda, "pica");
 
-    free(aux);
+    printf("\n\nResultado: %s\n\n", aux->nome);
+
+    listarAgenda(minhaAgenda, "CONTATOS CADASTRADOS");
+
     free(minhaAgenda);
     printf("\n\n");
     return 0;
