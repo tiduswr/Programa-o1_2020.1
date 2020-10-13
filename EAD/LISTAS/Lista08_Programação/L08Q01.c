@@ -3,12 +3,15 @@
 #include <locale.h>
 #include <string.h>
 #include <ctype.h>
+#define NAME 40
+#define TEL 15
+#define EMAIL 40
 
 /* ******************** CRIAÇÃO E STRUCTS ************************* */
 typedef struct Agenda{
-    char nome[40];
-    char telefone[15];
-    char email[40];
+    char nome[NAME];
+    char telefone[TEL];
+    char email[EMAIL];
     struct Agenda *prox;
 }Agenda;
 
@@ -36,7 +39,7 @@ Agenda * Pos_Node(Agenda *ref, int pos){
     Agenda *aux = ref;
     int i = 0;
     if(pos >= 0 && ref != (Agenda *) NULL){
-        while(aux != NULL){
+        while(aux != (Agenda *) NULL){
             if(i == pos){
                 return aux;
             }
@@ -70,9 +73,50 @@ int positivo(int valor){
     return valor;
 }
 
+void ClearBuffer(){
+    setbuf(stdin, NULL);
+}
+
+void pauseEXE(char message[]){
+    printf("\n\n%s... ", message);
+    ClearBuffer();
+    getchar();
+}
+
+void limpaTela(){
+    /*Caso o compilador não consiga limpar a tela, simplesmente será 
+    pulado algumas linhas e colocado alguns asteriscos separando*/
+    printf("\n\n**************************************************************************************************\n\n");
+    system("cls");
+}
+
+void limpaCampos(Agenda *node){
+    if(node != (Agenda *) NULL){
+        strcpy(node->nome, "");
+        strcpy(node->email, "");
+        strcpy(node->telefone, "");
+    }
+}
+
+void PerguntaNovoContato(){
+    printf("----------------------------------------");
+    printf("\n           INSERIR CONTATO\n");
+    printf("----------------------------------------\n\n");
+    printf("Cadastrar outro contato?:\n\n1 - Sim\n0 - Não\n\nResposta: ");
+}
+
+void removeBrkLn(char str[NAME]){
+    int lenStr = strlen(str);
+    for(int i = 0; i < lenStr; i++){
+        if( str[i] == '\n' ){
+            str[i] = 0;
+        }
+    }
+}
+    
 /* ******************** FUNÇÕES PRINCIPAIS ************************* */
 
-Agenda * inserirContato(Agenda *ref, char nome[40], char telefone[15], char email[40]){
+Agenda * inserirContato(Agenda *ref, char nome[NAME], char telefone[TEL], char email[EMAIL]){
     Agenda *nova;
 
     nova = (Agenda *) malloc(sizeof(Agenda));
@@ -91,7 +135,7 @@ Agenda * inserirContato(Agenda *ref, char nome[40], char telefone[15], char emai
         int i = 0;
         //Procura em que posição o nome fica menor 
         while(aux != (Agenda *) NULL){
-            if(strcmp(maiuscula(nome,40), maiuscula(aux->nome,40)) < 0){
+            if(strcmp(maiuscula(nome,NAME), maiuscula(aux->nome,NAME)) < 0){
                 break;
             }
             i++;
@@ -131,17 +175,17 @@ void listarAgenda(Agenda *ref, char title[]){
         printf("----------------------------------------+---------------+----------------------------------------+\n");
         while(aux != NULL){
             printf("%s", aux->nome);
-            for(int i = 0; i < positivo(strlen(aux->nome)-40);i++){
+            for(int i = 0; i < positivo(strlen(aux->nome)-NAME);i++){
                 printf(" ");
             }
             printf("|");
             printf("%s", aux->telefone);
-            for(int i = 0; i < positivo(strlen(aux->telefone)-15);i++){
+            for(int i = 0; i < positivo(strlen(aux->telefone)-TEL);i++){
                 printf(" ");
             }
             printf("|");
             printf("%s", aux->email);
-            for(int i = 0; i < positivo(strlen(aux->email)-40);i++){
+            for(int i = 0; i < positivo(strlen(aux->email)-EMAIL);i++){
                 printf(" ");
             }
             printf("|");
@@ -162,7 +206,7 @@ Agenda * BuscarContato(Agenda *ref, char nome[]){
     if(ref != (Agenda *) NULL){
         Agenda *aux = ref;
         while(aux != NULL){
-            if(strcmp(maiuscula(nome,40), maiuscula(aux->nome,40)) == 0){
+            if(strcmp(maiuscula(nome,NAME), maiuscula(aux->nome,NAME)) == 0){
                 return aux;
             }
             aux = aux->prox;
@@ -177,27 +221,107 @@ int main(void){
     setlocale(LC_ALL, "Portuguese");
 
     Agenda *minhaAgenda = criaAgenda();
-    //char loop = 'S';
+    Agenda novo;
+    Agenda *aux;
+    char query[NAME];
+    int cond = 0;
+    int continuar = 1;
 
-    minhaAgenda = inserirContato(minhaAgenda, "willian", "81762006", "harllem@gmail.com");
-    minhaAgenda = inserirContato(minhaAgenda, "bastiao", "34213350", "neto@gmail.com");
-    minhaAgenda = inserirContato(minhaAgenda, "ezequiel", "81437783", "ezequiel@gmail.com");
-    minhaAgenda = inserirContato(minhaAgenda, "ulisses", "81437783", "ezequiel@gmail.com");
-    minhaAgenda = inserirContato(minhaAgenda, "jonas", "81437783", "ezequiel@gmail.com");
-    minhaAgenda = inserirContato(minhaAgenda, "zeh", "81437783", "ezequiel@gmail.com");
-    minhaAgenda = inserirContato(minhaAgenda, "jose", "81437783", "ezequiel@gmail.com");
-    minhaAgenda = inserirContato(minhaAgenda, "manoel", "81437783", "ezequiel@gmail.com");
-    minhaAgenda = inserirContato(minhaAgenda, "1", "81437783", "ezequiel@gmail.com");
-    minhaAgenda = inserirContato(minhaAgenda, "ilmar", "81437783", "ezequiel@gmail.com");
-    minhaAgenda = inserirContato(minhaAgenda, "abelha", "81762006", "harllem@gmail.com");
+    while(cond != 4){
+        limpaTela();
+        printf("----------------------------------------");
+        printf("\n           AGENDA TELEFONICA\n");
+        printf("----------------------------------------\n");
+        printf("1 - Inserir Contato\n2 - Listar Contatos\n3 - Buscar Contato\n4 - Sair\n\n");
+        printf("Digite o numero correspondete a opção\ndesejada: ");
+        scanf("%d", &cond);
 
-    Agenda *aux = BuscarContato(minhaAgenda, "pica");
+        switch(cond){
+            case 1:
+                while(continuar == 1){
+                    limpaTela();
+                    printf("----------------------------------------");
+                    printf("\n           INSERIR CONTATO\n");
+                    printf("----------------------------------------\n\n");
+                    printf("Preencha o Formulario abaixo:\n\n");
+                    printf("Nome: ");
+                    ClearBuffer();
+                    fgets(novo.nome, NAME, stdin);
+                    removeBrkLn(novo.nome);
+                    aux = BuscarContato(minhaAgenda, novo.nome);
+                    if(aux == (Agenda *) NULL){
+                        printf("Email: ");
+                        ClearBuffer();
+                        fgets(novo.email, NAME, stdin);
+                        removeBrkLn(novo.email);
+                        printf("Telefone: ");
+                        ClearBuffer();
+                        fgets(novo.telefone, NAME, stdin);
+                        removeBrkLn(novo.telefone);
 
-    printf("\n\nResultado: %s\n\n", aux->nome);
+                        minhaAgenda = inserirContato(minhaAgenda, novo.nome, novo.telefone, novo.email);
+                    }
+                    else{
+                        limpaTela();
+                        printf("----------------------------------------");
+                        printf("\n           INSERIR CONTATO\n");
+                        printf("----------------------------------------\n\n");
+                        printf("\n\nEsse Nome ja foi Cadastrado!");
+                        pauseEXE("Digite ENTER para continuar");
+                    }
+                    limpaCampos(&novo);
+                    
+                    limpaTela();
+                    PerguntaNovoContato();
+                    ClearBuffer();
+                    scanf("%d",&continuar);
+                    while(continuar != 1 && continuar != 0){
+                        limpaTela();
+                        PerguntaNovoContato();
+                        ClearBuffer();
+                        scanf("%d",&continuar);
+                    }
+                }
+                break;
+            case 2:
+                limpaTela();
+                printf("----------------------------------------");
+                printf("\n           AGENDA TELEFONICA\n");
+                printf("----------------------------------------\n");
+                listarAgenda(minhaAgenda, "Contatos Cadastrados");
+                pauseEXE("Pressione ENTER para continuar");
+                break;
 
-    listarAgenda(minhaAgenda, "CONTATOS CADASTRADOS");
+            case 3:
+                limpaTela();
+                printf("----------------------------------------");
+                printf("\n           AGENDA TELEFONICA\n");
+                printf("----------------------------------------\n");
+                printf("\nDigite o nome para buscar:\n- ");
+                ClearBuffer();
+                fgets(query, NAME, stdin);
+                removeBrkLn(query);
+                aux = BuscarContato(minhaAgenda, query);
+
+                if(aux != (Agenda *) NULL){
+                    printf("\nResultado da Busca: \n");
+                    printf("\n    Nome: %s", aux->nome);
+                    printf("\n    Email: %s", aux->email);
+                    printf("\n    Telefone: %s", aux->telefone);
+                }
+                else{
+                    printf("\nResultado da Busca: \n\nNenhuma correspondencia encontrada!");
+                }
+
+                pauseEXE("Pressione ENTER para continuar");
+                break;
+
+            default:
+                break;
+        }
+    }
 
     free(minhaAgenda);
-    printf("\n\n");
+    printf("\n\nEncerrando...");
     return 0;
 }
