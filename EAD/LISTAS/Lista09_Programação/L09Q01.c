@@ -215,6 +215,39 @@ Agenda * BuscarContato(Agenda *ref, char nome[]){
     return (Agenda *) NULL;
 }
 
+Agenda * freeAgenda(Agenda * ref){
+    Agenda *aux = ref;    
+    while(ref != (Agenda *) NULL){
+        ref = ref->prox;
+        free(aux);
+        aux = ref;
+    }
+    return ref;
+}
+
+Agenda * RemoveContato(Agenda *ref, char nome[]){
+    Agenda *aux = ref, *antes = (Agenda *) NULL;
+    while(aux != (Agenda *) NULL){
+        if(strcmp(maiuscula(nome,NAME), maiuscula(aux->nome, NAME)) == 0){
+            break;
+        }
+        antes = aux;
+        aux = aux->prox;
+    }
+    if(aux == (Agenda *) NULL){
+        return ref;
+    }
+    else if(antes == (Agenda *) NULL){
+        ref = aux->prox;
+        free(aux);
+    }
+    else{
+        antes->prox = aux->prox;
+        free(aux);
+    }
+    return ref;
+}
+
 /* ******************** MAIN ************************* */
 
 int main(void){
@@ -227,12 +260,12 @@ int main(void){
     int cond = 0;
     int continuar = 1;
 
-    while(cond != 4){
+    while(cond != 6){
         limpaTela();
         printf("----------------------------------------");
         printf("\n           AGENDA TELEFONICA\n");
         printf("----------------------------------------\n");
-        printf("1 - Inserir Contato\n2 - Listar Contatos\n3 - Buscar Contato\n4 - Sair\n\n");
+        printf("1 - Inserir Contato\n2 - Listar Contatos\n3 - Buscar Contato\n4 - Remover Contato\n5 - Excluir todos os Contatos\n6 - Sair\n\n");
         printf("Digite o numero correspondete a opção\ndesejada: ");
         scanf("%d", &cond);
 
@@ -266,7 +299,7 @@ int main(void){
                         printf("----------------------------------------");
                         printf("\n           INSERIR CONTATO\n");
                         printf("----------------------------------------\n\n");
-                        printf("\n\nEsse Nome ja foi Cadastrado!");
+                        printf("Esse Nome ja foi Cadastrado!");
                         pauseEXE("Digite ENTER para continuar");
                     }
                     limpaCampos(&novo);
@@ -316,13 +349,58 @@ int main(void){
 
                 pauseEXE("Pressione ENTER para continuar");
                 break;
+            case 4:
+                limpaTela();
+                printf("----------------------------------------");
+                printf("\n           AGENDA TELEFONICA\n");
+                printf("----------------------------------------\n");
+                printf("\nDigite o nome para Excluir:\n- ");
+                ClearBuffer();
+                fgets(query, NAME, stdin);
+                removeBrkLn(query);
+                aux = BuscarContato(minhaAgenda, query);
 
+                if(aux != (Agenda *) NULL){
+                    printf("\nResultado da Busca: \n");
+                    printf("\n    Nome: %s", aux->nome);
+                    printf("\n    Email: %s", aux->email);
+                    printf("\n    Telefone: %s", aux->telefone);
+                    printf("\n\nDeseja Realmente excluir esse Contato?\n\n1 - Sim\n0 - Não\n\nResposta: ");
+                    scanf("%d", &cond);
+                    if(cond == 1){
+                        minhaAgenda = RemoveContato(minhaAgenda, query);
+                        printf("\n%s foi removido!", query);
+                    }
+                    else{
+                        printf("\nOperação Abortada!");
+                    }
+                }
+                else{
+                    printf("\nResultado da Busca: \n\nNenhuma correspondencia encontrada!");
+                }
+                pauseEXE("Pressione ENTER para continuar");
+                break;
+                case 5:
+                    limpaTela();
+                    printf("----------------------------------------");
+                    printf("\n           AGENDA TELEFONICA\n");
+                    printf("----------------------------------------\n");
+                    printf("\nVocê esta prestes a Excluir todos os\ncontatos, você tem certeza que quer\ncontinuar?\n\n1 - Sim\n0 - Não\n\nResposta: ");
+                    scanf("%d", &cond);
+                    if(cond == 1){
+                        minhaAgenda = freeAgenda(minhaAgenda);
+                        printf("\nTodos os Contatos foram Removidos!");
+                    }
+                    else{
+                        printf("\nOperação Abortada!");
+                    }
+                    pauseEXE("Pressione ENTER para continuar");
             default:
                 break;
         }
     }
 
-    free(minhaAgenda);
+    minhaAgenda = freeAgenda(minhaAgenda);
     printf("\n\nEncerrando...");
     return 0;
 }
