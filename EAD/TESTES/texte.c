@@ -2,32 +2,40 @@
 #include <stdio.h>
 
 int main(void){
-    FILE *file;
-    int vetor[5] = {1, 2, 3, 4, 5};
-    int contagem;
 
-    file = fopen("binario.txt", "wb");
-    if(file == NULL){
-        printf("Erro na abertura!\n\n");
-        exit(0);
-    }
-    contagem = fwrite(vetor, sizeof(int), 5, file);
-    if(contagem != 5){
-        printf("Erro, nao foram gravados todos os valores");
-    }
-    fclose(file);
+    FILE * arquivo = NULL;
+    int * inteiros;
+    inteiros = (int) malloc(sizeof(int)*10);
 
-    contagem = 0;
-    int leitor[5];
-    file = fopen("binario.txt", "rb");
-    rewind(file);
-    contagem = fread(leitor, sizeof(int), 5, file);
-    if(contagem != 5){
-        printf("Erro, nao foram lidos todos os valores");
+    for(int i = 0; i < 10; i++){
+        inteiros[i] = i*2 + 3;
     }
-    printf("\nImprimindo valores:\n\n");
-    for(int i = 0; i < 5; i++){
-        printf("%d\n", leitor[i]);
+    inteiros = (int) realloc(inteiros, sizeof(int)*11);
+    inteiros[10] = 0;
+
+    arquivo = fopen("data.dat", "wb");
+    
+    if(arquivo == NULL){
+        printf("Arquivo Não Aberto!");
     }
-    return 0;
+    else{
+        fwrite(inteiros, sizeof(int), 11, arquivo);
+    }
+
+    int *teste;
+    teste = (int) malloc(sizeof(int)*11);
+    
+    fclose(arquivo);
+    arquivo = NULL;
+    arquivo = fopen("data.dat", "rb");
+    if(arquivo == NULL){
+        printf("Arquivo não Aberto!");
+    }
+    else{
+        fread(teste, sizeof(int), 11, arquivo);
+    }
+
+    for(int i = 0; i < 11; i++){
+        printf("%d, ", teste[i]);
+    }
 }

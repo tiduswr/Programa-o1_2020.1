@@ -52,7 +52,7 @@ int main(void){
 	scanf("%f", &val3);	
 	
 	//Ativa acentos no prompt
-	setlocale(LC_ALL, "Portuguese")		
+	setlocale(LC_ALL, "Portuguese");
 
 	//Verifica o maior e o menor valor
 	maior = maior_valor(val1, val2, val3);

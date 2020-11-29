@@ -1,0 +1,41 @@
+# depslib dependency file v1.0
+1606627794 source:c:\users\navegadorjc\documents\ciencia_computacao_uepb\programacao1_2020.1\ead\projeto\mainfunctions.c
+	<stdlib.h>
+	<stdio.h>
+	<locale.h>
+	<string.h>
+	<ctype.h>
+	<time.h>
+	"utilityFunctions.h"
+
+1606619276 c:\users\navegadorjc\documents\ciencia_computacao_uepb\programacao1_2020.1\ead\projeto\utilityfunctions.h
+	<stdlib.h>
+	<stdio.h>
+	<locale.h>
+	<string.h>
+	<ctype.h>
+	<time.h>
+	<math.h>
+
+1606622374 source:c:\users\navegadorjc\documents\ciencia_computacao_uepb\programacao1_2020.1\ead\projeto\utilityfunctions.c
+	<stdlib.h>
+	<stdio.h>
+	<locale.h>
+	<string.h>
+	<ctype.h>
+	<time.h>
+	<math.h>
+
+1606627861 source:c:\users\navegadorjc\documents\ciencia_computacao_uepb\programacao1_2020.1\ead\projeto\main.c
+	<stdlib.h>
+	<stdlib.h>
+	<stdio.h>
+	<locale.h>
+	<string.h>
+	<ctype.h>
+	<time.h>
+	"mainFunctions.h"
+	"utilityFunctions.h"
+
+1606627910 c:\users\navegadorjc\documents\ciencia_computacao_uepb\programacao1_2020.1\ead\projeto\mainfunctions.h
+
